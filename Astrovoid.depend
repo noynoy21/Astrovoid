@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1764035782 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\render.c
+	<windows.h>
+	<stdio.h>
+	"render.h"
+
+1763970656 c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\render.h
+
+1763970962 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\entity.c
+	"entity.h"
+
+1763970962 c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\entity.h
+
+1763971610 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"render.h"
+	"entity.h"
+	"menu.h"
+	"game.h"
+
+1763971256 c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\menu.h
+
+1763971446 c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\game.h
+
+1763971664 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\game.c
+	<stdlib.h>
+	<time.h>
+	<conio.h>
+	<stdio.h>
+	<windows.h>
+	"render.h"
+	"entity.h"
+	"game.h"
+
+1763971680 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\menu.c
+	<stdlib.h>
+	<stdio.h>
+	<conio.h>
+	"menu.h"
+	"render.h"
+
+1764035770 source:c:\users\constantino jr\desktop\codeblocks shii\machine problem\iter 1\astrovoid\meheader.c
+
