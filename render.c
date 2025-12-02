@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include "render.h"
 #define WIDTH 20         // The horizontal boundary of the game area
-#define HEIGHT 20        // The vertical boundary of the game area
+#define HEIGHT 15        // The vertical boundary of the game area
+
 
 // =============== Console Control Functions ===============
 // Moves console cursor to position (x, y)
@@ -42,9 +43,10 @@ void drawBorder() {
 
 // Draw player symbol '^'
 void drawPlayer(int x, int y) {
+    SetConsoleOutputCP(CP_UTF8);
     setColor(9);                // Blue
     gotoxy(x, y);               // Move to player position
-    printf("^");                // Print symbol
+    printf("\u25B2\n");                // Print symbol
     setColor(7);
 }
 
@@ -61,6 +63,32 @@ void drawBullet(int x, int y) {
     setColor(14);              // Yellow
     gotoxy(x, y);
     printf("|");
+    setColor(7);
+}
+
+//Draw boss
+void drawBoss(int x, int y, char size[BOSS_H][BOSS_W]) {
+    for (int i = 0; i < BOSS_H; i++) {
+        gotoxy(x, y + i);
+        for (int j = 0; j < BOSS_W; j++) {
+
+            if (!isspace(size[i][j]) && size[i][j] == 'o') {
+                setColor(14);   // Yellow
+            } else {
+                setColor(4);    // Red
+            }
+
+            printf("%c", size[i][j]);
+        }
+    }
+    setColor(7); // Reset color
+}
+
+// Draw boss bullet
+void drawBossBullet(int x, int y) {   // Use actual coordinates
+    setColor(12);
+    gotoxy(x, y);
+    printf("!");
     setColor(7);
 }
 
@@ -83,6 +111,27 @@ void eraseBullet(int x, int y) {
     printf(" ");
 }
 
+// Erase the boss
+void clearBoss(int x, int y) {
+    for (int i = 0; i < BOSS_H; i++) {
+        int drawY = y + i;
+        if (drawY <= 0 || drawY >= HEIGHT) continue;  // Skip border rows
+
+        gotoxy(x, drawY);
+        for (int j = 0; j < BOSS_W; j++) {
+            int drawX = x + j;
+            if (drawX <= 0 || drawX >= WIDTH) continue; // Skip border columns
+            printf(" ");
+        }
+    }
+}
+
+// Erase boss bullets
+void eraseBossBullet(int x, int y) {
+    gotoxy(x, y);
+    printf(" ");
+}
+
 // =============== Special Effects Functions ===============
 // Simple explosion animation effect (flashing 'X')
 void explosionEffect(int x, int y) {
@@ -96,4 +145,45 @@ void explosionEffect(int x, int y) {
         gotoxy(x, y); printf(" ");         // Clear
     }
     setColor(7);                           // Reset color
+}
+
+// Movements for special enemies
+// First pattern
+void move1(float *x, float *y, float *dx) {
+    *x += *dx;
+
+    if (*x < 1) {
+        *x = 1;
+        *dx *= -1;
+    }
+    if (*x > WIDTH - BOSS_W - 1) {
+        *x = WIDTH - BOSS_W - 1;
+        *dx *= -1;
+    }
+}
+
+// Second pattern
+void move2(float *x, float *y, float *dx, float *dy) {
+    *x += *dx;
+    *y += *dy;
+
+    // Horizontal bounce
+    if (*x < 1) {
+        *x = 1;
+        *dx *= -1;
+    }
+    if (*x > WIDTH - BOSS_W - 1) {
+        *x = WIDTH - BOSS_W - 1;
+        *dx *= -1;
+    }
+
+    // Vertical bounce
+    if (*y < 1) {
+        *y = 1;
+        *dy *= -1;
+    }
+    if (*y > (HEIGHT/2)-3) {
+        *y = (HEIGHT/2)-3;
+        *dy *= -1;
+    }
 }

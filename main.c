@@ -5,6 +5,7 @@
 #include "entity.h"
 #include "menu.h"
 #include "game.h"
+#include "mainGame.h"
 
 // ===================== MAIN FUNCTION =====================
 int main() {
