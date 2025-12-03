@@ -4,8 +4,14 @@
 #include "render.h"
 #include "menu.h"
 #include "mainGame.h"
+#include "gameRound2.h"
+#include "gameBoss.h"
 
-//gcc -o astrovoid entity.c game.c main.c mainGame.c menu.c render.c
+/*
+    Welcome! This game was made by Jamin, Inoy, Denz, and Dave!
+    To compile this game and create a .exe file, execute this command in the commandline in the directory of the game folder:
+    gcc -o astrovoid entity.c gameRound1.c gameRound2.c gameBoss.c main.c mainGame.c menu.c render.c 
+*/
 
 // ===================== MAIN FUNCTION =====================
 int main() {
@@ -27,8 +33,11 @@ int main() {
                 printf("\nThanks for playing, Guardian!\n");
                 Sleep(1000);             // Short delay before closing
                 return 0;                // Exit program
-            case 3:
-                //playBOSS();
+            case 67:        // Only for testing purposes
+                playRound2(5);
+                break;
+            case 69:        // Only for testing purposes (testing boss)
+                playBOSS();
                 break;
             default:       // Handles invalid inputs
                 printf("Invalid choice! Try again.\n");

@@ -1,0 +1,6 @@
+#ifndef GAMEBOSS_H_INCLUDED
+#define GAMEBOSS_H_INCLUDED
+
+int playBOSS();
+
+#endif // GAMEBOSS_H_INCLUDED

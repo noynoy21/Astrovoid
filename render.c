@@ -102,57 +102,49 @@ void drawBossBullet(int x, int y) {   // Use actual coordinates
 }
 
 // Draw Headsup display (HUD)
-void drawHud(int score, int life, int numBullets) {
+void drawHud(int score, int life, int numBullets, int level) {
+    // -------- Display the round and score beside play area (if not boss round) --------
+    if (level != 3) {
+        gotoxy(WIDTH + 5, 1);
+        setColor(10);
+        printf("ROUND %d  ", level);
+        setColor(7);
+
         // -------- Display the score beside play area --------
         gotoxy(WIDTH + 5, 2);
         setColor(10);
         printf("Score: %d  ", score);
         setColor(7);
+    }
 
-        // -------- Display the bullets below play area --------
-        gotoxy(0, HEIGHT + 2);
-        setColor(10);
-        printf("Bull:");
-        setColor(2);
-        for (int i = 0; i < numBullets; i++) {
-            printf("|");
-        }
-        for (int i = numBullets; i < MAX_BULLETS; i++) printf(" ");
-        setColor(7);
+    // -------- Display the bullets below play area --------
+    gotoxy(0, HEIGHT + 2);
+    setColor(10);
+    printf("Bull:");
+    setColor(2);
+    for (int i = 0; i < numBullets; i++) {
+        printf("|");
+    }
+    for (int i = numBullets; i < MAX_BULLETS; i++) printf(" ");
+    setColor(7);
 
-        // -------- Display the player's lives below play area --------
-        printf(" ");
-        setColor(10);
-        printf("Life: ");
-        setColor(12);
-        for(int i = 0; i< life; i++){
-            printf("o");
-        }
-        for (int i = life; i < 5; i++) printf(" "); // erase leftover markers when life decreases
-        setColor(7);
+    // -------- Display the player's lives below play area --------
+    printf(" ");
+    setColor(10);
+    printf("Life: ");
+    setColor(12);
+    for(int i = 0; i< life; i++){
+        printf("o");
+    }
+    for (int i = life; i < 5; i++) printf(" "); // erase leftover markers when life decreases
+    setColor(7);
 }
 
 // =============== Erasing Functions ===============
 // Erase player by printing space at old location
-void erasePlayer(int x, int y) {
-    gotoxy(x, y);
-    printf(" ");
-}
 
-// Erase enemy
-void eraseEnemy(int x, int y) {
-    gotoxy(x, y);
-    printf(" ");
-}
-
-// Erase all
+// Erase one char length entities
 void eraseObj(int x, int y) {
-    gotoxy(x, y);
-    printf(" ");
-}
-
-// Erase bullet
-void eraseBullet(int x, int y) {
     gotoxy(x, y);
     printf(" ");
 }
@@ -170,12 +162,6 @@ void clearBoss(int x, int y) {
             printf(" ");
         }
     }
-}
-
-// Erase boss bullets
-void eraseBossBullet(int x, int y) {
-    gotoxy(x, y);
-    printf(" ");
 }
 
 // =============== Special Effects Functions ===============

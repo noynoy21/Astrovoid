@@ -8,18 +8,17 @@
 #include "gameRound1.h"
 #include "config.h"
 
-#define CURRENT_ROUND 1
+#define CURRENT_ROUND 2     // Current round: 2
 
-int playRound1() {
+int playRound2(int life) {
     system("cls");         // Clear screen before starting game
     drawBorder();          // Draws outer frame of the playfield
 
     Entity player = { WIDTH / 2, HEIGHT - 2, 1 }; // Player starts near bottom center
-    Entity enemies[MAX_ENEMIES];                  // Array of enemies
+    Entity enemies[MAX_ENEMIES+1];                  // Array of enemies
     Entity bullets[MAX_BULLETS];                  // Array of bullets
     Entity hitts[MAX_HITTABLES];                  // Array of hittables
     int score = 0;            // Tracks player's score
-    int life = MAX_PLAYER_LIFE;
     char key;                 // Stores input key
     srand(time(0));           // Seed random generator for varied enemy spawns
 
@@ -148,14 +147,8 @@ int playRound1() {
         }
         drawHud(score, life, numBullets, CURRENT_ROUND);
 
-        if (score >= 10) {
-            gotoxy(WIDTH / 2 - 4, HEIGHT / 2);      // Centered message
-            setColor(12); printf("ROUND 2!");       // Red text
-            gotoxy(WIDTH / 2 - 7, HEIGHT / 2 + 1);
-            setColor(14); printf("Are you ready??");
-            setColor(7);
-            _getch();  
-            return life;                            // Life amount is carried unto the next round
+        if (score >= 5) {
+            return 1;
         } 
         if (life <= 0) {
             gotoxy(WIDTH / 2 - 5, HEIGHT / 2);      // Centered message
@@ -171,3 +164,4 @@ int playRound1() {
         Sleep(75);    // 75 ms delay between frames
     }
 }
+
