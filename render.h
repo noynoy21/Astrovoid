@@ -18,8 +18,7 @@ void drawPlayer(int, int);          // Draws the player symbol '^'
 void drawEnemy(int, int);           // Draws an enemy '*'
 void drawHittable(int, int);           // Draws a hittable 'O'
 void drawBullet(int, int);          // Draws a bullet '|'
-void drawBoss(int, int, char [BOSS_H][BOSS_W]); // Draws the Boss
-void drawMiniBoss(int, int, char [MINIBOSS_H][MINIBOSS_W]); // Draw the MiniBoss
+void drawBossEntity(int, int, char [BOSS_H][BOSS_W], int, int); // Draws the Boss and the miniboss
 void drawBossBullet(int, int);      // Draws the bullet of boss
 void drawHud(int, int, int);
 
@@ -29,8 +28,7 @@ void erasePlayer(int, int);         // Erases the player symbol
 void eraseEnemy(int, int);          // Erases the enemy symbol
 void eraseObj(int, int);          // Erases the enemy symbol
 void eraseBullet(int, int);         // Erases the bullet
-void clearBoss(int, int);           // Erases the boss
-void clearMiniBoss(int, int);       // Erases the miniboss
+void clearBossEntity(int, int, int, int);           // Erases the boss and minibosses
 void eraseBossBullet (int, int);    // Erases the bullet of boss
 
 
