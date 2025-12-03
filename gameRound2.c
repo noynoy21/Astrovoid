@@ -179,7 +179,7 @@ int playRound2() {
             printf("press 1 to continue...");
             Sleep(2000);
             
-            return playMiniBoss(life);
+            return playMiniBoss();
         }
 
         if (life <= 0) {

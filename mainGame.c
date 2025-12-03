@@ -4,16 +4,16 @@
 
 int playGame()
 {
-    // Play Round 1
+    // Play Round 1 
     int playerLife = playRound1();
 
-    // If player survived Round 1, proceed to Round 2
+    // If player survived Round 1, proceed to Round 2 
     if (playerLife > 0) {
-        playerLife = playRound2(playerLife);
+        playerLife = playRound2();  
         
-        // If player survived Round 2, proceed to Final Boss
+        // If player survived Round 2, proceed to Final Boss 
         if (playerLife > 0) {
-            playBOSS(playerLife);
+            playBOSS();  
         }
     }
     
