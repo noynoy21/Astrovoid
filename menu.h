@@ -2,7 +2,7 @@
 #define MENU_H_INCLUDED
 
 void showMenu();        // Displays the main menu
-void tutorialRound();   // Displays tutorial before starting
+void tutorialRound1();   // Displays tutorial before starting
 void tutorialPVP();     // Displays PVP tutorial
 
 #endif // MENU_H_INCLUDED

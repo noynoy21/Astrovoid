@@ -44,7 +44,7 @@ void showMenu() {
 }
 
 // ===================== TUTORIAL DISPLAY =====================
-void tutorialRound() {
+void tutorialRound1() {
     SetConsoleOutputCP(CP_UTF8);
     system("cls");
     setColor(10);
@@ -53,7 +53,7 @@ void tutorialRound() {
     printf("Use 'A' and 'D' to move left/right.\n");
     printf("Use 'W' and 'S' to move up/down.\n");
     printf("Press 'SPACEBAR' to shoot upward.\n");
-    printf("Avoid falling enemies '*'.\n");
+    printf("Avoid falling enemies '*'.\nThey cannot be hit.\n");
     setColor(14);
     printf("\nNote: if the meteor is too near. You will be hit.\n\n");
     setColor(10);
@@ -90,3 +90,5 @@ void tutorialPVP() {
     printf("\nPress any key to begin battle...");
     _getch();
 }
+
+void transitionText()

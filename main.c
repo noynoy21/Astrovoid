@@ -28,7 +28,7 @@ int main() {
 
         switch (choice) {
             case 1:        // Single Player
-                tutorialRound();
+                tutorialRound1();
                 playGame();
                 break;
             case 2:        // PVP Mode
