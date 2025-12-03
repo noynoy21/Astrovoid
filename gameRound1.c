@@ -197,7 +197,7 @@ int playRound1() {
 }
 
 // ===================== GAMEPLAY w/ BOSS FUNCTION =====================
-int playBOSS(int startingLife){
+int playBOSS(){
     system("cls");
     drawBorder();
     srand(time(NULL));
@@ -210,7 +210,7 @@ int playBOSS(int startingLife){
     Entity bulletsAdd2[MAX_BULL_BOSS];
 
     int life_Boss = BOSS_LIFE;
-    int life = startingLife;
+    int life = 5;
     int score = 0;
     char key;
     

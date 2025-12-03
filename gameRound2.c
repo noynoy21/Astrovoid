@@ -19,7 +19,7 @@
 #define MAX_PLAYER_LIFE 5
 
 // ===================== ROUND 2 GAMEPLAY =====================
-int playRound2(int startingLife) {
+int playRound2() {
     system("cls");
     drawBorder();
 
@@ -28,7 +28,7 @@ int playRound2(int startingLife) {
     Entity bullets[MAX_BULLETS];
     Entity hitts[MAX_HITTABLES];
     int score = 0;
-    int life = startingLife;
+    int life = 5;
     char key;
     srand(time(0));
 
@@ -174,8 +174,9 @@ int playRound2(int startingLife) {
             system("cls");
             gotoxy(WIDTH / 2 - 4, HEIGHT / 2);
             setColor(12);
-            printf("Uh oh...");
+            printf("Uh oh...\n");
             setColor(7);
+            printf("press 1 to continue...");
             Sleep(2000);
             
             return playMiniBoss(life);
@@ -196,7 +197,7 @@ int playRound2(int startingLife) {
 }
 
 // ===================== MINI-BOSS BATTLE =====================
-int playMiniBoss(int startingLife) {
+int playMiniBoss() {
     system("cls");
     drawBorder();
     srand(time(NULL));
@@ -207,7 +208,7 @@ int playMiniBoss(int startingLife) {
     Entity bullets2[MAX_BULL_BOSS];
 
     int life_Boss = MINI_BOSS_LIFE;
-    int life = startingLife;
+    int life = 5;
     int score = 0;
     char key;
 

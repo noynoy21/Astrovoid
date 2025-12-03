@@ -8,7 +8,7 @@
 #include "gameRound2.h"
 
 // Compile command:
-// gcc -o astrovoid entity.c gameRound1.c gameRound2.c main.c mainGame.c menu.c render.c pvp.c
+// gcc -o ASStrovoid entity.c gameRound1.c gameRound2.c main.c mainGame.c menu.c pvp.c render.c
 
 // ===================== MAIN FUNCTION =====================
 int main() {
