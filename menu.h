@@ -3,5 +3,6 @@
 
 void showMenu();        // Displays the main menu
 void tutorialRound();   // Displays tutorial before starting
+void tutorialPVP();     // Displays PVP tutorial
 
 #endif // MENU_H_INCLUDED
