@@ -160,7 +160,7 @@ int playRound1() {
         // Check if player reached 10 points
         if (score >= 10) {
             system("cls");
-            gotoxy(WIDTH / 2 - 8, HEIGHT / 2 - 1);
+            gotoxy(WIDTH / 2 - 7, HEIGHT / 2 - 1);
             setColor(10);
             printf("CONGRATULATIONS!");
             gotoxy(WIDTH / 2 - 10, HEIGHT / 2);
@@ -312,16 +312,16 @@ int playBOSS(){
             for (int i = 0; i < MAX_BULL_BOSS; i++) {
                 if (!bullets1[i].active) {
                     bullets1[i].active = 1;
-                    bullets1[i].x = (int)Boss.boss.x + 1;
-                    bullets1[i].y = (int)Boss.boss.y + 2;
+                    bullets1[i].x = (int)Boss.boss.x + 2;
+                    bullets1[i].y = (int)Boss.boss.y + 3;
                     break;
                 }
             }
             for (int i = 0; i < MAX_BULL_BOSS; i++) {
                 if (!bullets2[i].active) {
                     bullets2[i].active = 1;
-                    bullets2[i].x = (int)Boss.boss.x + 5;
-                    bullets2[i].y = (int)Boss.boss.y + 2;
+                    bullets2[i].x = (int)Boss.boss.x + 6;
+                    bullets2[i].y = (int)Boss.boss.y + 3;
                     break;
                 }
             }
@@ -330,15 +330,15 @@ int playBOSS(){
                     if (!bulletsAdd1[i].active) {
                         bulletsAdd1[i].active = 1;
                         bulletsAdd1[i].x = (int)Boss.boss.x;
-                        bulletsAdd1[i].y = (int)Boss.boss.y + 2;
+                        bulletsAdd1[i].y = (int)Boss.boss.y + 1;
                         break;
                     }
                 }
                 for (int i = 0; i < MAX_BULL_BOSS; i++) {
                     if (!bulletsAdd2[i].active) {
                         bulletsAdd2[i].active = 1;
-                        bulletsAdd2[i].x = (int)Boss.boss.x + 6;
-                        bulletsAdd2[i].y = (int)Boss.boss.y + 2;
+                        bulletsAdd2[i].x = (int)Boss.boss.x + 8;
+                        bulletsAdd2[i].y = (int)Boss.boss.y + 1;
                         break;
                     }
                 }
@@ -390,9 +390,9 @@ int playBOSS(){
             if (!bullets[i].active) continue;
 
             if (bullets[i].x >= (int)Boss.boss.x &&
-                bullets[i].x <= (int)Boss.boss.x + 6 &&
+                bullets[i].x <= (int)Boss.boss.x + 8 &&
                 bullets[i].y >= (int)Boss.boss.y &&
-                bullets[i].y <= (int)Boss.boss.y + 2) {
+                bullets[i].y <= (int)Boss.boss.y + 3) {
 
                 bullets[i].active = 0;
                 life_Boss--;
