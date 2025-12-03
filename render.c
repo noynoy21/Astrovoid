@@ -184,10 +184,10 @@ void explosionEffect(int x, int y) {
     for (int i = 0; i < 3; i++) {          // Repeat 3 flashes
         setColor(12);
         gotoxy(x, y); printf("X");         // Red 'X'
-        Sleep(8);
+        Sleep(5);
         setColor(14);
         gotoxy(x, y); printf("X");         // Yellow flash
-        Sleep(8);
+        Sleep(5);
         gotoxy(x, y); printf(" ");         // Clear
     }
     setColor(7);                           // Reset color
