@@ -1,8 +1,8 @@
 #ifndef RENDER_H_INCLUDED
 #define RENDER_H_INCLUDED
 
-#define BOSS_W 7
-#define BOSS_H 3
+#define BOSS_W 9
+#define BOSS_H 4
 
 // =============== Console Control Functions ===============
 void gotoxy(int, int);              // Moves the console cursor to (x, y)

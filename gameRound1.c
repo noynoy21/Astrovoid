@@ -12,8 +12,8 @@
 #define MAX_ENEMIES 6    // Maximum number of enemies active on screen at once
 #define MAX_BULLETS 3    // Maximum number of bullets that can be fired simultaneously
 #define MAX_HITTABLES 3  // Maximum number of hittable objects
-#define BOSS_W 7
-#define BOSS_H 3
+#define BOSS_W 9
+#define BOSS_H 4
 #define MAX_BULL_BOSS 3
 #define BOSS_SPEED 1
 #define BOSS_LIFE_LAYER 3
@@ -208,9 +208,10 @@ int playBOSS(){
     body Boss = {
         { WIDTH / 4, 1, BOSS_SPEED},  // Start slightly below top border
         {
-            "xvvvvvx",
-            " Iv!vI ",
-            " ! o ! ",
+            "    o    ",
+            "<<|000|>>",
+            " 0<v!v>0 ",
+            "  ! v !  ",
         }
     };
 

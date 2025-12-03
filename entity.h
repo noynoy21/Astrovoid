@@ -1,8 +1,8 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
 
-#define BOSS_W 7
-#define BOSS_H 3
+#define BOSS_W 9
+#define BOSS_H 4
 
 typedef struct {
     int x, y;        // X and Y coordinates on the screen
