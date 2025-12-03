@@ -93,6 +93,24 @@ void drawBoss(int x, int y, char size[BOSS_H][BOSS_W]) {
     setColor(7); // Reset color
 }
 
+//Draw Miniboss
+void drawMiniBoss(int x, int y, char size[MINIBOSS_H][MINIBOSS_W]) {
+    for (int i = 0; i < MINIBOSS_H; i++) {
+        gotoxy(x, y + i);
+        for (int j = 0; j < MINIBOSS_W; j++) {
+
+            if (!isspace(size[i][j]) && size[i][j] == 'o') {
+                setColor(14);   // Yellow
+            } else {
+                setColor(4);    // Red
+            }
+
+            printf("%c", size[i][j]);
+        }
+    }
+    setColor(7); // Reset color
+}
+
 // Draw boss bullet
 void drawBossBullet(int x, int y) {   // Use actual coordinates
     setColor(12);
@@ -165,6 +183,21 @@ void clearBoss(int x, int y) {
 
         gotoxy(x, drawY);
         for (int j = 0; j < BOSS_W; j++) {
+            int drawX = x + j;
+            if (drawX <= 0 || drawX >= WIDTH) continue; // Skip border columns
+            printf(" ");
+        }
+    }
+}
+
+// Erase the miniboss
+void clearBoss(int x, int y) {
+    for (int i = 0; i < MINIBOSS_H; i++) {
+        int drawY = y + i;
+        if (drawY <= 0 || drawY >= HEIGHT) continue;  // Skip border rows
+
+        gotoxy(x, drawY);
+        for (int j = 0; j < MINIBOSS_W; j++) {
             int drawX = x + j;
             if (drawX <= 0 || drawX >= WIDTH) continue; // Skip border columns
             printf(" ");

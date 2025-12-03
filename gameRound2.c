@@ -12,8 +12,8 @@
 #define MAX_ENEMIES 8        // More enemies in round 2
 #define MAX_BULLETS 3
 #define MAX_HITTABLES 4      // More hittables in round 2
-#define BOSS_W 7
-#define BOSS_H 3
+#define MINIBOSS_W 7
+#define MINIBOSS_H 3
 #define MAX_BULL_BOSS 2
 #define MINI_BOSS_LIFE 15    // Half of full boss
 #define MAX_PLAYER_LIFE 5
@@ -225,7 +225,6 @@ int playMiniBoss() {
         }
     };
 
-    float dx = 0.5;
     int bulletCooldown = 0;
 
     // Display Mini-Boss warning
@@ -239,7 +238,7 @@ int playMiniBoss() {
     while (1) {
         // Erase previous characters
         erasePlayer(player.x, player.y);
-        clearBoss((int)MiniBoss.boss.x, (int)MiniBoss.boss.y);
+        clearMiniBoss((int)MiniBoss.boss.x, (int)MiniBoss.boss.y);
 
         // Erase bullets
         for (int i = 0; i < MAX_BULLETS; i++)
@@ -328,7 +327,7 @@ int playMiniBoss() {
         }
 
         // Draw mini-boss and bullets
-        drawBoss((int)MiniBoss.boss.x, (int)MiniBoss.boss.y, MiniBoss.sizes);
+        drawMiniBoss((int)MiniBoss.boss.x, (int)MiniBoss.boss.y, MiniBoss.sizes);
         for (int i = 0; i < MAX_BULL_BOSS; i++) {
             if (bullets1[i].active) drawBossBullet(bullets1[i].x, bullets1[i].y);
             if (bullets2[i].active) drawBossBullet(bullets2[i].x, bullets2[i].y);
