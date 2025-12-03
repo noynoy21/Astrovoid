@@ -247,7 +247,7 @@ int playBOSS(){
 
         // Erase previous characters
         erasePlayer(player.x, player.y);
-        clearBoss((int)Boss.boss.x, (int)Boss.boss.y);
+        clearBossEntity((int)Boss.boss.x, (int)Boss.boss.y, BOSS_H, BOSS_W);
 
         // Erase bullets
         for (int i = 0; i < MAX_BULLETS; i++)
@@ -377,7 +377,7 @@ int playBOSS(){
         }
 
         // Draw boss and bullets
-        drawBoss((int)Boss.boss.x, (int)Boss.boss.y, Boss.sizes);
+        drawBossEntity((int)Boss.boss.x, (int)Boss.boss.y, Boss.sizes, BOSS_H, BOSS_W);
         for (int i = 0; i < MAX_BULL_BOSS; i++) {
             if (bullets1[i].active) drawBossBullet(bullets1[i].x, bullets1[i].y);
             if (bullets2[i].active) drawBossBullet(bullets2[i].x, bullets2[i].y);
@@ -401,7 +401,7 @@ int playBOSS(){
             }
 
             if (life_Boss <= 0) {
-                clearBoss((int)Boss.boss.x, (int)Boss.boss.y);
+                clearBossEntity((int)Boss.boss.x, (int)Boss.boss.y, BOSS_H, BOSS_W);
                 gotoxy(WIDTH/2-4, HEIGHT/2);
                 setColor(10);
                 printf("YOU WIN!");
