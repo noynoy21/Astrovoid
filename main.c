@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <windows.h>
 #include "render.h"
-#include "entity.h"
 #include "menu.h"
-#include "game.h"
 #include "mainGame.h"
+
+//gcc -o astrovoid entity.c game.c main.c mainGame.c menu.c render.c
 
 // ===================== MAIN FUNCTION =====================
 int main() {
@@ -18,15 +18,18 @@ int main() {
         printf("\nSelect an option: ");  // Prompts user for input
         scanf("%d", &choice);            // Reads user's choice
 
-        switch (choice) {  // Evaluates user’s input
-            case 1:        // If user selects “Start Game”
+        switch (choice) {  // Evaluates userï¿½s input
+            case 1:        // If user selects ï¿½Start Gameï¿½
                 tutorialRound();         // Show tutorial instructions
                 playGame();              // Start actual gameplay
                 break;
-            case 2:        // If user selects “Exit”
+            case 2:        // If user selects ï¿½Exitï¿½
                 printf("\nThanks for playing, Guardian!\n");
                 Sleep(1000);             // Short delay before closing
                 return 0;                // Exit program
+            case 3:
+                //playBOSS();
+                break;
             default:       // Handles invalid inputs
                 printf("Invalid choice! Try again.\n");
                 Sleep(1000);

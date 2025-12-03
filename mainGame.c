@@ -1,12 +1,11 @@
-#include "game.h"
+#include "gameRound1.h"
 #include "mainGame.h"
 
 int playGame()
 {
-    int b;
+    int playerLife = playRound1();
 
-    if (playRound1()) {
-
-        b = playBOSS();
+    if (playerLife) {
+        playBOSS();
     }
 }
