@@ -229,10 +229,10 @@ void explosionEffect(int x, int y) {
 void explosionBossEffect(int x, int y) {
     setColor(12);
     gotoxy(x, y); printf("X");         // Red 'X'
-    Sleep(2);
+    Sleep(4);
     setColor(14);
     gotoxy(x, y); printf("X");         // Yellow flash
-    Sleep(2);
+    Sleep(4);
     gotoxy(x, y); printf(" ");         // Clear
     setColor(7);                       // Reset color
 }

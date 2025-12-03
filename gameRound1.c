@@ -312,16 +312,16 @@ int playBOSS(){
             for (int i = 0; i < MAX_BULL_BOSS; i++) {
                 if (!bullets1[i].active) {
                     bullets1[i].active = 1;
-                    bullets1[i].x = (int)Boss.boss.x + 2;
-                    bullets1[i].y = (int)Boss.boss.y + 3;
+                    bullets1[i].x = (int)Boss.boss.x + 2; // left '!'
+                    bullets1[i].y = (int)Boss.boss.y + 3; // bottom row
                     break;
                 }
             }
             for (int i = 0; i < MAX_BULL_BOSS; i++) {
                 if (!bullets2[i].active) {
                     bullets2[i].active = 1;
-                    bullets2[i].x = (int)Boss.boss.x + 6;
-                    bullets2[i].y = (int)Boss.boss.y + 3;
+                    bullets2[i].x = (int)Boss.boss.x + 6; // right '!'
+                    bullets2[i].y = (int)Boss.boss.y + 3; // bottom row
                     break;
                 }
             }
@@ -329,16 +329,16 @@ int playBOSS(){
                 for (int i = 0; i < MAX_BULL_BOSS; i++) {
                     if (!bulletsAdd1[i].active) {
                         bulletsAdd1[i].active = 1;
-                        bulletsAdd1[i].x = (int)Boss.boss.x;
-                        bulletsAdd1[i].y = (int)Boss.boss.y + 1;
+                        bulletsAdd1[i].x = (int)Boss.boss.x; // left '!'
+                        bulletsAdd1[i].y = (int)Boss.boss.y+2; // bottom row
                         break;
                     }
                 }
                 for (int i = 0; i < MAX_BULL_BOSS; i++) {
                     if (!bulletsAdd2[i].active) {
                         bulletsAdd2[i].active = 1;
-                        bulletsAdd2[i].x = (int)Boss.boss.x + 8;
-                        bulletsAdd2[i].y = (int)Boss.boss.y + 1;
+                        bulletsAdd2[i].x = (int)Boss.boss.x + 8; // right '!'
+                        bulletsAdd2[i].y = (int)Boss.boss.y+2; // bottom row
                         break;
                     }
                 }
@@ -347,7 +347,7 @@ int playBOSS(){
                 if(change<=0){
                     bulletCooldown = 0;
                     change = 10 + rand() % 21;
-                }
+                } // frames between bullets
             }else if(burst<=4999){
                 bulletCooldown -= 2;
             }else{
@@ -389,14 +389,15 @@ int playBOSS(){
         for (int i = 0; i < MAX_BULLETS; i++) {
             if (!bullets[i].active) continue;
 
+            // Check if bullet hits boss area
             if (bullets[i].x >= (int)Boss.boss.x &&
                 bullets[i].x <= (int)Boss.boss.x + 8 &&
                 bullets[i].y >= (int)Boss.boss.y &&
                 bullets[i].y <= (int)Boss.boss.y + 3) {
 
-                bullets[i].active = 0;
-                life_Boss--;
-                explosionBossEffect(bullets[i].x, bullets[i].y);
+                bullets[i].active = 0;   // remove bullet
+                life_Boss--;             // damage boss
+                explosionEffect(bullets[i].x, bullets[i].y);
             }
 
             if (life_Boss <= 0) {
