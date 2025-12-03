@@ -2,34 +2,47 @@
 #include <stdlib.h>
 #include <windows.h>
 #include "render.h"
-#include "entity.h"
 #include "menu.h"
-#include "game.h"
+#include "mainGame.h"
+#include "pvp.h"
+#include "gameRound2.h"
+
+// Compile command:
+// gcc -o ASStrovoid entity.c gameRound1.c gameRound2.c main.c mainGame.c menu.c pvp.c render.c
 
 // ===================== MAIN FUNCTION =====================
 int main() {
-    system("cls");         // Clears the screen before starting
-    hideCursor();          // Removes blinking cursor for aesthetic gameplay
+    system("cls");
+    hideCursor();
 
-    int choice;            // Stores user menu choice
-    while (1) {            // Infinite loop for continuous menu display
-        showMenu();        // Draws the menu
-        printf("\nSelect an option: ");  // Prompts user for input
-        scanf("%d", &choice);            // Reads user's choice
+    int choice;
+    while (1) {
+        showMenu();
+        printf("\nSelect an option: ");
+        
+        // Better input handling
+        if (scanf("%d", &choice) != 1) {
+            while(getchar() != '\n');
+            choice = -1;
+        }
 
-        switch (choice) {  // Evaluates user’s input
-            case 1:        // If user selects “Start Game”
-                tutorialRound();         // Show tutorial instructions
-                playGame();              // Start actual gameplay
+        switch (choice) {
+            case 1:        // Single Player
+                tutorialRound();
+                playGame();
                 break;
-            case 2:        // If user selects “Exit”
+            case 2:        // PVP Mode
+                tutorialPVP();
+                playPVP();
+                break;
+            case 3:        // Exit
                 printf("\nThanks for playing, Guardian!\n");
-                Sleep(1000);             // Short delay before closing
-                return 0;                // Exit program
-            default:       // Handles invalid inputs
+                Sleep(1000);
+                return 0;
+            default:
                 printf("Invalid choice! Try again.\n");
                 Sleep(1000);
         }
     }
-    return 0;              // Program never reaches here due to infinite loop
+    return 0;
 }
