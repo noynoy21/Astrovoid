@@ -5,18 +5,20 @@
 #include <windows.h>
 #include "render.h"
 #include "entity.h"
-#include "game.h"
+#include "gameRound1.h"
 
 #define WIDTH 20         // The horizontal boundary of the game area
 #define HEIGHT 15        // The vertical boundary of the game area
 #define MAX_ENEMIES 6    // Maximum number of enemies active on screen at once
-#define MAX_BULLETS 5    // Maximum number of bullets that can be fired simultaneously
+#define MAX_BULLETS 3    // Maximum number of bullets that can be fired simultaneously
+#define MAX_HITTABLES 3  // Maximum number of hittable objects
 #define BOSS_W 7
 #define BOSS_H 3
 #define MAX_BULL_BOSS 3
 #define BOSS_SPEED 1
 #define BOSS_LIFE_LAYER 3
 #define BOSS_LIFE 30
+#define MAX_PLAYER_LIFE 5
 
 int playRound1() {
     system("cls");         // Clear screen before starting game
@@ -25,7 +27,9 @@ int playRound1() {
     Entity player = { WIDTH / 2, HEIGHT - 2, 1 }; // Player starts near bottom center
     Entity enemies[MAX_ENEMIES];                  // Array of enemies
     Entity bullets[MAX_BULLETS];                  // Array of bullets
+    Entity hitts[MAX_HITTABLES];                  // Array of hittables
     int score = 0;            // Tracks player's score
+    int life = MAX_PLAYER_LIFE;
     char key;                 // Stores input key
     srand(time(0));           // Seed random generator for varied enemy spawns
 
@@ -36,17 +40,28 @@ int playRound1() {
         enemies[i].active = 1;                   // Enemy is active
     }
 
+    // Initialize hittables with random positions
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+        hitts[i].x = rand() % (WIDTH - 2) + 1; // Random X inside play area
+        hitts[i].y = rand() % 5 + 1;           // Y starts near top
+        hitts[i].active = 1;                   // Enemy is active
+    }
+
     // Deactivate all bullets at game start
     for (int i = 0; i < MAX_BULLETS; i++) {
         bullets[i].active = 0;
     }
 
+    
+    
     // ===================== MAIN GAME LOOP =====================
     while (1) {
         // -------- Erase old positions to prepare for new frame --------
         erasePlayer(player.x, player.y);
         for (int i = 0; i < MAX_ENEMIES; i++)
             eraseEnemy(enemies[i].x, enemies[i].y);
+        for (int i = 0; i < MAX_HITTABLES; i++)
+            eraseObj(hitts[i].x, hitts[i].y);
         for (int i = 0; i < MAX_BULLETS; i++)
             if (bullets[i].active) eraseBullet(bullets[i].x, bullets[i].y);
 
@@ -55,29 +70,25 @@ int playRound1() {
             key = _getch();                // Read it without waiting for Enter
             if (key == 'a' || key == 'A') player.x--;   // Move left
             if (key == 'd' || key == 'D') player.x++;   // Move right
-            if (key == 'w' || key == 'W') player.y--;   // Move up
-            if (key == 's' || key == 'S') player.y++;   // Move down
 
             // SPACEBAR: Fire a bullet upward
             if (key == 32) {               // ASCII code 32 = Space
                 for (int i = 0; i < MAX_BULLETS; i++) {
                     if (!bullets[i].active) {     // Find first inactive bullet slot
                         bullets[i].x = player.x;  // Spawn bullet at player's position
-                        bullets[i].y = player.y;
+                        bullets[i].y = HEIGHT - 2;
                         bullets[i].active = 1;    // Activate bullet
                         break;                    // Only fire one bullet per press
                     }
                 }
             }
 
-            if (key == 27) break;          // ESC (ASCII 27) exits game
+            if (key == 27) return 0;          // ESC (ASCII 27) exits game
         }
 
         // -------- Prevent player from leaving play area --------
         if (player.x < 1) player.x = 1;
         if (player.x > WIDTH - 2) player.x = WIDTH - 2;
-        if (player.y < 1) player.y = 1;
-        if (player.y > HEIGHT - 2) player.y = HEIGHT - 2;
 
         // -------- Move enemies downward each frame --------
         for (int i = 0; i < MAX_ENEMIES; i++) {
@@ -85,6 +96,15 @@ int playRound1() {
             if (enemies[i].y > HEIGHT - 1) {       // If enemy passes bottom
                 enemies[i].y = 1;                  // Respawn at top
                 enemies[i].x = rand() % (WIDTH - 2) + 1; // Random X position
+            }
+        }
+
+        // -------- Move hittables downward each frame --------
+        for (int i = 0; i < MAX_HITTABLES; i++) {
+            hitts[i].y++;                        // Move enemy down one unit
+            if (hitts[i].y > HEIGHT - 1) {       // If enemy passes bottom
+                hitts[i].y = 1;                  // Respawn at top
+                hitts[i].x = rand() % (WIDTH - 2) + 1; // Random X position
             }
         }
 
@@ -97,56 +117,68 @@ int playRound1() {
             }
         }
 
-        // -------- Draw updated positions --------
-        drawPlayer(player.x, player.y);            // Draw player
-        for (int i = 0; i < MAX_ENEMIES; i++)
+        // -------- Draw updated objects' positions --------
+        drawPlayer(player.x, player.y);                                     // Draw player
+        for (int i = 0; i < MAX_ENEMIES; i++)                               // Draw enemy
             drawEnemy(enemies[i].x, enemies[i].y);
-        for (int i = 0; i < MAX_BULLETS; i++)
+        for (int i = 0; i < MAX_HITTABLES; i++)                               // Draw hittables
+            drawHittable(hitts[i].x, hitts[i].y);
+        for (int i = 0; i < MAX_BULLETS; i++)                               // Draw bullets
             if (bullets[i].active) drawBullet(bullets[i].x, bullets[i].y);
 
         // -------- Check collision: Player vs Enemies --------
         for (int i = 0; i < MAX_ENEMIES; i++) {
             if (collision(player.x, player.y, enemies[i].x, enemies[i].y)) {
                 explosionEffect(player.x, player.y);    // Explosion animation
-                gotoxy(WIDTH / 2 - 5, HEIGHT / 2);      // Centered message
-                setColor(12); printf("GAME OVER!");     // Red text
-                gotoxy(WIDTH / 2 - 8, HEIGHT / 2 + 1);
-                setColor(14); printf("Final Score: %d", score);
-                setColor(7);
-                _getch();                               // Wait for key
-                return 0;                                 // Exit playGame()
+                life--;                                 // Exit playGame()
             }
         }
 
-        // -------- Check collision: Bullets vs Enemies --------
-        for (int i = 0; i < MAX_ENEMIES; i++) {
+        // -------- Check collision: Bullets vs Hittables --------
+        for (int i = 0; i < MAX_HITTABLES; i++) {
             for (int j = 0; j < MAX_BULLETS; j++) {
-                int coll = (collision(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y) || collisionAdj(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y)); // boolean value if direct/adjacent collisions happen
+                int coll = (collision(bullets[j].x, bullets[j].y, hitts[i].x, hitts[i].y) || collisionAdj(bullets[j].x, bullets[j].y, hitts[i].x, hitts[i].y)); // boolean value if direct/adjacent collisions happen
 
                 if (bullets[j].active && coll) {
                     eraseBullet(bullets[j].x, bullets[j].y);
                     bullets[j].active = 0;               // Disable bullet
-                    explosionEffect(enemies[i].x, enemies[i].y); // Visual hit feedback
-                    enemies[i].x = rand() % (WIDTH - 2) + 1;     // Respawn enemy at top
-                    enemies[i].y = 1;
+                    explosionEffect(hitts[i].x, hitts[i].y); // Visual hit feedback
+                    hitts[i].x = rand() % (WIDTH - 2) + 1;     // Respawn enemy at top
+                    hitts[i].y = 1;
                     score += 1;                          // Increment score
                 }
             }
         }
 
-        // -------- Display the score beside play area --------
-        gotoxy(WIDTH + 5, 2);
-        setColor(10);
-        printf("Score: %d  ", score);
-        setColor(7);
+        int numBullets = MAX_BULLETS;
+        for (int i = 0; i < MAX_BULLETS; i++) {
+            if (bullets[i].active) {     // Find first inactive bullet slot
+                numBullets--;
+            }
+        }
+        drawHud(score, life, numBullets);
 
         if (score >= 10) {
-            return 1;
+            return life;
+        } 
+        if (life <= 0) {
+            gotoxy(WIDTH / 2 - 5, HEIGHT / 2);      // Centered message
+            setColor(12); printf("GAME OVER!");     // Red text
+            gotoxy(WIDTH / 2 - 8, HEIGHT / 2 + 1);
+            setColor(14); printf("Final Score: %d", score);
+            setColor(7);
+            _getch();                               // Wait for key
+            return 0; //player loses round
         }
 
         // -------- Delay for smoother movement (controls speed) --------
         Sleep(75);    // 75 ms delay between frames
     }
+}
+
+int playRound2(int life)
+{
+    
 }
 
 
@@ -163,8 +195,8 @@ int playBOSS(){
     Entity bulletsAdd1[MAX_BULL_BOSS];
     Entity bulletsAdd2[MAX_BULL_BOSS];
 
-    int life_Boss = 30;
-    int life = 5;
+    int life_Boss = BOSS_LIFE;
+    int life = MAX_PLAYER_LIFE;
     int score = 0;            // Tracks player's score
     char key;                 // Stores input key
     for (int i = 0; i < MAX_BULLETS; i++) bullets[i].active = 0;
@@ -231,7 +263,7 @@ int playBOSS(){
                 }
             }
 
-            if (key == 27) break;          // ESC (ASCII 27) exits game
+            if (key == 27) return 0;          // ESC (ASCII 27) exits game
         }
 
         // -------- Prevent player from leaving play area --------
@@ -351,7 +383,7 @@ int playBOSS(){
 
                 bullets[i].active = 0;   // remove bullet
                 life_Boss--;             // damage boss
-                explosionEffect(bullets[i].x, bullets[i].y);
+                explosionBossEffect(bullets[i].x, bullets[i].y);
             }
 
             if (life_Boss <= 0) {
@@ -375,7 +407,7 @@ int playBOSS(){
 
                 bullets1[i].active = 0;
                 life--;     // player takes damage
-                explosionEffect(player.x, player.y);
+                explosionBossEffect(player.x, player.y);
             }
 
             if (bullets2[i].active &&
@@ -384,7 +416,7 @@ int playBOSS(){
 
                 bullets2[i].active = 0;
                 life--;
-                explosionEffect(player.x, player.y);
+                explosionBossEffect(player.x, player.y);
             }
             if (bulletsAdd1[i].active &&
                 bulletsAdd1[i].x == player.x &&
@@ -392,7 +424,7 @@ int playBOSS(){
 
                 bulletsAdd1[i].active = 0;
                 life--;     // player takes damage
-                explosionEffect(player.x, player.y);
+                explosionBossEffect(player.x, player.y);
             }
 
             if (bulletsAdd2[i].active &&
@@ -401,10 +433,9 @@ int playBOSS(){
 
                 bulletsAdd2[i].active = 0;
                 life--;
-                explosionEffect(player.x, player.y);
+                explosionBossEffect(player.x, player.y);
             }
         }
-
 
         // Displays
         gotoxy(WIDTH + 5, 2);
@@ -432,15 +463,15 @@ int playBOSS(){
                     printf(" ");
             }
         }
-        gotoxy(WIDTH + 5, lines + 6);
-        setColor(10);
-        printf("Life: ");
-        setColor(12);
-        for(int i = 0; i<life; i++){
-            printf("o");
+
+        // -------- Display the bullets beside play area --------
+        int numBullets = MAX_BULLETS;
+        for (int i = 0; i < MAX_BULLETS; i++) {
+            if (bullets[i].active) {     // Find first inactive bullet slot
+                numBullets--;
+            }
         }
-        for (int i = life; i < 5; i++) printf(" "); // erase leftover markers when life decreases
-        setColor(7);
+        drawHud(score, life, numBullets);
 
         if (life <= 0) {
             gotoxy(WIDTH/2 - 5, HEIGHT/2);

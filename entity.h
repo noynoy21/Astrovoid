@@ -1,5 +1,6 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
+
 #define BOSS_W 7
 #define BOSS_H 3
 
