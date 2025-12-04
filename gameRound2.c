@@ -6,6 +6,7 @@
 #include "render.h"
 #include "entity.h"
 #include "gameRound2.h"
+#include "menu.h"
 
 #define WIDTH 20
 #define HEIGHT 15
