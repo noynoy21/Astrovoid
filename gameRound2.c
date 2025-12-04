@@ -146,7 +146,7 @@ int playRound2() {
         // Check collision: Bullets vs Hittables
         for (int i = 0; i < MAX_HITTABLES; i++) {
             for (int j = 0; j < MAX_BULLETS; j++) {
-                int coll = (collision(bullets[j].x, bullets[j].y, hitts[i].x, hitts[i].y) || 
+                int coll = (collision(bullets[j].x, bullets[j].y, hitts[i].x, hitts[i].y) ||
                            collisionAdj(bullets[j].x, bullets[j].y, hitts[i].x, hitts[i].y));
 
                 if (bullets[j].active && coll) {
@@ -177,8 +177,18 @@ int playRound2() {
             printf("Uh oh...\n");
             setColor(7);
             printf("press 1 to continue...");
-            Sleep(2000);
-            
+            while(1) {
+                if (_kbhit()) {
+                    char choice = _getch();
+                    if (choice == '1') {
+                        break;
+                    } else if (choice == 27) {
+                        return 0;  // ESC to exit
+                    }
+                    }
+                }
+            // Sleep(2000);
+
             return playMiniBoss();
         }
 
@@ -230,7 +240,7 @@ int playMiniBoss() {
     // Display Mini-Boss warning
     gotoxy(WIDTH / 2 - 6, HEIGHT / 2);
     setColor(14);
-    printf("MINI-BOSS!");
+    printf("MINI-BOFF!");
     Sleep(1500);
     system("cls");
     drawBorder();
@@ -355,9 +365,35 @@ int playMiniBoss() {
                 Sleep(1500);
                 setColor(7);
                 _getch();
-                return 1;
+                bossRound();
+                while(1) {
+                if (_kbhit()) {
+                    char choice = _getch();
+                    if (choice == '1') {
+                        bossRound();
+                        break;
+                    } else if (choice == 27) {
+                        return 0;  // ESC to exit
+                    }
+                    }
+                }
+                
+                /*
+                while(1) {
+                if (_kbhit()) {
+                    char choice = _getch();
+                    if (choice == '1') {
+                        bossRound();
+                        break;
+                    } else if (choice == 27) {
+                        return 0;  // ESC to exit
+                    }
+                    }
+                }
+                */
+            return 1;
             }
-        }
+    }
 
         // Check collision: Boss bullets vs Player
         for (int i = 0; i < MAX_BULL_BOSS; i++) {
@@ -410,6 +446,35 @@ int playMiniBoss() {
             }
         }
         drawHud(score, life, numBullets);
+
+        /* changes ni denz
+        if (score >= 10) {
+            system("cls");
+            gotoxy(WIDTH / 2 - 7, HEIGHT / 2 - 1);
+            setColor(10);
+            printf("Here it comes...");
+
+            gotoxy(WIDTH / 2 - 10, HEIGHT / 2);
+            setColor(14);
+            printf("Press 1 to continue to");
+            gotoxy(WIDTH / 2 - 4, HEIGHT / 2 + 1);
+            printf("Round 2");
+            setColor(7);
+
+
+            while(1) {
+                if (_kbhit()) {
+                    char choice = _getch();
+                    if (choice == '1') {
+                        return life;  // Return life to continue to round 2
+                    } else if (choice == 27) {
+                        return 0;  // ESC to exit
+                    }
+                }
+            }
+        }
+        */
+        //changes ni denz
 
         if (life <= 0) {
             gotoxy(WIDTH/2 - 5, HEIGHT/2);
