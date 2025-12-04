@@ -65,6 +65,20 @@ void tutorialRound1() {
     _getch();
 }
 
+void bossRound() {
+    SetConsoleOutputCP(CP_UTF8);
+    system("cls");
+    setColor(10);
+    printf("============== BOSS ROUND ==============\n");
+    setColor(7);
+    printf("The boss's attack speed increases as its health decreases.\n");
+    setColor(14);
+    printf("\nGOOD LUCK.\n\n");
+    setColor(12); printf("*"); setColor(7);
+    printf("\n\nPress any key to start your mission...");
+    _getch();
+}
+
 // ===================== PVP TUTORIAL =====================
 void tutorialPVP() {
     SetConsoleOutputCP(CP_UTF8);
@@ -77,13 +91,13 @@ void tutorialPVP() {
     printf("):\n");
     printf("  Move: W/A/S/D\n");
     printf("  Shoot: SPACEBAR\n\n");
-    
+
     printf("PLAYER 2 (Green ");
     setColor(10); printf("\u25BC"); setColor(7);
     printf("):\n");
     printf("  Move: ARROW KEYS\n");
     printf("  Shoot: ENTER\n\n");
-    
+
     printf("Each player has 3 lives.\n");
     printf("Shoot your opponent to win!\n");
     printf("Pure PVP - No asteroids!\n");
@@ -91,4 +105,4 @@ void tutorialPVP() {
     _getch();
 }
 
-void transitionText()
+void transitionText();
