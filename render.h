@@ -3,8 +3,8 @@
 
 #define BOSS_W 9
 #define BOSS_H 4
-#define MINIBOSS_H 7
-#define MINIBOSS_W 3
+#define MINIBOSS_W 7
+#define MINIBOSS_H 3
 
 // =============== Console Control Functions ===============
 void gotoxy(int, int);              // Moves the console cursor to (x, y)
