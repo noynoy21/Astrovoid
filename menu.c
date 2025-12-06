@@ -312,20 +312,6 @@ int creditsRoll()
     }
 }
 
-void bossRoundMenu() {
-    SetConsoleOutputCP(CP_UTF8);
-    system("cls");
-    setColor(10);
-    printf("============== BOSS ROUND ==============\n");
-    setColor(7);
-    printf("The boss's attack speed increases as its health decreases.\n");
-    setColor(14);
-    printf("\nGOOD LUCK.\n\n");
-    setColor(12); printf("*"); setColor(7);
-    printf("\n\nPress any key to start your mission...");
-    _getch();
-}
-
 // ===================== PVP TUTORIAL =====================
 void tutorialPVP() {
     SetConsoleOutputCP(CP_UTF8);

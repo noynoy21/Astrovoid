@@ -22,9 +22,11 @@ int playGame()
         return 0;
     }
 
-    miniBossIntro();
-    playerLife = playMiniBoss(playerLife);
+    miniBossIntro();                        // Intro cutscene for the miniboss
+    playerLife = playMiniBoss(playerLife);  // Executes the miniboss round
 
+    
+    // Terminate gameplay sequence if the player lost the 
     if (!playerLife || !WINMiniBoss()) {
         return 0;
     }
@@ -33,8 +35,6 @@ int playGame()
         WINBoss();
         creditsRoll();
     }
-
-    // Terminate gameplay sequence if the player lost the 
     
     return 0;
 }

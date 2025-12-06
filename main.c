@@ -10,6 +10,15 @@
 #include "gameFinalBoss.h"
 #include "config.h"
 
+/* 
+   CMSC 11 Machine Problem
+	   Our_Awesome_Game_Name++;
+	   Group Members:
+	   - Stark, Arya T.
+       - Monkey, Luffy D.
+	   - Parker, Peter P.
+*/
+
 // Compile command:
 // gcc -o astrovoid entity.c gameRound1.c gameRound2.c gameFinalBoss.c main.c mainGame.c menu.c pvp.c render.c config.c
 
