@@ -6,29 +6,22 @@
 #include "render.h"
 #include "entity.h"
 #include "gameRound2.h"
+#include "menu.h"
+#include "config.h"
 
-#define WIDTH 20
-#define HEIGHT 15
-#define MAX_ENEMIES 8        // More enemies in round 2
-#define MAX_BULLETS 3
-#define MAX_HITTABLES 4      // More hittables in round 2
-#define MINIBOSS_W 7
-#define MINIBOSS_H 3
-#define MAX_BULL_BOSS 2
-#define MINI_BOSS_LIFE 15    // Half of full boss
-#define MAX_PLAYER_LIFE 5
+#define ADDITIONAL_LIFE 2
 
 // ===================== ROUND 2 GAMEPLAY =====================
-int playRound2() {
+int playRound2(int life) {
     system("cls");
-    drawBorder();
+    drawBorder(WIDTH, HEIGHT);
 
     Entity player = { WIDTH / 2, HEIGHT - 2, 1 };
     Entity enemies[MAX_ENEMIES];
     Entity bullets[MAX_BULLETS];
     Entity hitts[MAX_HITTABLES];
-    int score = 0;
-    int life = 5;
+    int score = GPlayerScore;
+    int maxLife = life;
     char key;
     srand(time(0));
 
@@ -57,26 +50,24 @@ int playRound2() {
     printf("ROUND 2!");
     Sleep(1500);
     system("cls");
-    drawBorder();
+    drawBorder(WIDTH, HEIGHT);
 
     // ===================== MAIN GAME LOOP =====================
     while (1) {
         // Erase old positions
         erasePlayer(player.x, player.y);
         for (int i = 0; i < MAX_ENEMIES; i++)
-            eraseEnemy(enemies[i].x, enemies[i].y);
+            eraseObj(enemies[i].x, enemies[i].y);
         for (int i = 0; i < MAX_HITTABLES; i++)
             eraseObj(hitts[i].x, hitts[i].y);
         for (int i = 0; i < MAX_BULLETS; i++)
-            if (bullets[i].active) eraseBullet(bullets[i].x, bullets[i].y);
+            if (bullets[i].active) eraseObj(bullets[i].x, bullets[i].y);
 
         // Handle Player Input
         if (_kbhit()) {
             key = _getch();
             if (key == 'a' || key == 'A') player.x--;
             if (key == 'd' || key == 'D') player.x++;
-            if (key == 'w' || key == 'W') player.y--;
-            if (key == 's' || key == 'S') player.y++;
 
             // SPACEBAR: Fire a bullet
             if (key == 32) {
@@ -90,14 +81,12 @@ int playRound2() {
                 }
             }
 
-            if (key == 27) return 0;
+            if (key == 27) return 0; // If player wants to exit
         }
 
         // Boundary checking
         if (player.x < 1) player.x = 1;
         if (player.x > WIDTH - 2) player.x = WIDTH - 2;
-        if (player.y < 1) player.y = 1;
-        if (player.y > HEIGHT - 2) player.y = HEIGHT - 2;
 
         // Move enemies (slightly faster in round 2)
         for (int i = 0; i < MAX_ENEMIES; i++) {
@@ -166,30 +155,12 @@ int playRound2() {
                 numBullets--;
             }
         }
-        drawHud(score, life, numBullets);
+        drawHud(score, life, maxLife, numBullets);
 
-        // Check if mini-boss should spawn
-        if (score >= 5) {
-            // Warning message
-            system("cls");
-            gotoxy(WIDTH / 2 - 4, HEIGHT / 2);
-            setColor(12);
-            printf("Uh oh...\n");
-            setColor(7);
-            printf("press 1 to continue...");
-            while(1) {
-                if (_kbhit()) {
-                    char choice = _getch();
-                    if (choice == '1') {
-                        break;
-                    } else if (choice == 27) {
-                        return 0;  // ESC to exit
-                    }
-                    }
-                }
-            // Sleep(2000);
-
-            return playMiniBoss();
+        // Check if mini-boss should spawn (15 is when the miniboss spawns)
+        if (score >= 15) {
+            GPlayerScore = score;
+            return life;
         }
 
         if (life <= 0) {
@@ -206,23 +177,36 @@ int playRound2() {
     }
 }
 
+
+
+
 // ===================== MINI-BOSS BATTLE =====================
-int playMiniBoss() {
+int playMiniBoss(int life) {
     system("cls");
-    drawBorder();
+    drawBorder(WIDTH, HEIGHT);
     srand(time(NULL));
 
     Entity player = { WIDTH / 2, HEIGHT - 2, 1 };
+    Entity enemies[MINI_BOSS_MAX_ENEMIES];
     Entity bullets[MAX_BULLETS];
     Entity bullets1[MAX_BULL_BOSS];
     Entity bullets2[MAX_BULL_BOSS];
 
     int life_Boss = MINI_BOSS_LIFE;
-    int life = 5;
-    int score = 0;
+    life += 2;
+    int maxLife = life;
+    int score = GPlayerScore;
     char key;
 
+    // Initialize enemies
+    for (int i = 0; i < MINI_BOSS_MAX_ENEMIES; i++) {
+        enemies[i].x = rand() % (WIDTH - 2) + 1;
+        enemies[i].y = rand() % 5 + 1;
+        enemies[i].active = 1;
+    }
+    // Initialize player bullets
     for (int i = 0; i < MAX_BULLETS; i++) bullets[i].active = 0;
+    //Initialize miniboss bullets
     for (int i = 0; i < MAX_BULL_BOSS; i++) bullets1[i].active = 0;
     for (int i = 0; i < MAX_BULL_BOSS; i++) bullets2[i].active = 0;
 
@@ -243,16 +227,20 @@ int playMiniBoss() {
     printf("MINI-BOFF!");
     Sleep(1500);
     system("cls");
-    drawBorder();
+    drawBorder(WIDTH, HEIGHT);
 
     while (1) {
-        // Erase previous characters
+        // Erase previous player sprite
         erasePlayer(player.x, player.y);
+        // Erase previous boss character
         clearBossEntity((int)MiniBoss.boss.x, (int)MiniBoss.boss.y, MINIBOSS_H, MINIBOSS_W);
-
-        // Erase bullets
+        // Erase previous enemy sprites
+        for (int i = 0; i < MINI_BOSS_MAX_ENEMIES; i++)
+            eraseObj(enemies[i].x, enemies[i].y);
+        // Erase player bullets
         for (int i = 0; i < MAX_BULLETS; i++)
             if (bullets[i].active) eraseBullet(bullets[i].x, bullets[i].y);
+        // Erase miniboss bullets
         for (int i = 0; i < MAX_BULL_BOSS; i++) {
             if (bullets1[i].active) eraseBossBullet(bullets1[i].x, bullets1[i].y);
             if (bullets2[i].active) eraseBossBullet(bullets2[i].x, bullets2[i].y);
@@ -261,12 +249,11 @@ int playMiniBoss() {
         // Handle Player Input
         if (_kbhit()) {
             key = _getch();
+            // move player in case of valid player input
             if (key == 'a' || key == 'A') player.x--;
             if (key == 'd' || key == 'D') player.x++;
-            if (key == 'w' || key == 'W') player.y--;
-            if (key == 's' || key == 'S') player.y++;
 
-            if (key == 32) {
+            if (key == 32) { // player hits spacebar
                 for (int i = 0; i < MAX_BULLETS; i++) {
                     if (!bullets[i].active) {
                         bullets[i].x = player.x;
@@ -283,8 +270,15 @@ int playMiniBoss() {
         // Boundary checking
         if (player.x < 1) player.x = 1;
         if (player.x > WIDTH - 2) player.x = WIDTH - 2;
-        if (player.y < 1) player.y = 1;
-        if (player.y > HEIGHT - 2) player.y = HEIGHT - 2;
+
+        // Move enemies (slightly faster in round 2)
+        for (int i = 0; i < MINI_BOSS_MAX_ENEMIES; i++) {
+            enemies[i].y++;
+            if (enemies[i].y > HEIGHT - 1) {
+                enemies[i].y = 1;
+                enemies[i].x = rand() % (WIDTH - 2) + 1;
+            }
+        }
 
         // Move bullets
         for (int i = 0; i < MAX_BULLETS; i++) {
@@ -295,8 +289,10 @@ int playMiniBoss() {
             }
         }
 
-        // Draw player and bullets
+        // Draw player and bullets and enemies
         drawPlayer(player.x, player.y);
+        for (int i = 0; i < MINI_BOSS_MAX_ENEMIES; i++)
+            drawEnemy(enemies[i].x, enemies[i].y);
         for (int i = 0; i < MAX_BULLETS; i++)
             if (bullets[i].active) drawBullet(bullets[i].x, bullets[i].y);
 
@@ -356,44 +352,7 @@ int playMiniBoss() {
                 life_Boss--;
                 explosionBossEffect(bullets[i].x, bullets[i].y);
             }
-
-            if (life_Boss <= 0) {
-                clearBossEntity((int)MiniBoss.boss.x, (int)MiniBoss.boss.y, MINIBOSS_H, MINIBOSS_W);
-                gotoxy(WIDTH/2-4, HEIGHT/2);
-                setColor(10);
-                printf("YOU WIN!");
-                Sleep(1500);
-                setColor(7);
-                _getch();
-                bossRound();
-                while(1) {
-                if (_kbhit()) {
-                    char choice = _getch();
-                    if (choice == '1') {
-                        bossRound();
-                        break;
-                    } else if (choice == 27) {
-                        return 0;  // ESC to exit
-                    }
-                    }
-                }
-                
-                /*
-                while(1) {
-                if (_kbhit()) {
-                    char choice = _getch();
-                    if (choice == '1') {
-                        bossRound();
-                        break;
-                    } else if (choice == 27) {
-                        return 0;  // ESC to exit
-                    }
-                    }
-                }
-                */
-            return 1;
-            }
-    }
+        }
 
         // Check collision: Boss bullets vs Player
         for (int i = 0; i < MAX_BULL_BOSS; i++) {
@@ -411,6 +370,14 @@ int playMiniBoss() {
                 bullets2[i].active = 0;
                 life--;
                 explosionBossEffect(player.x, player.y);
+            }
+        }
+
+        // Check collision: Player vs Enemies
+        for (int i = 0; i < MINI_BOSS_MAX_ENEMIES; i++) {
+            if (collision(player.x, player.y, enemies[i].x, enemies[i].y)) {
+                explosionEffect(player.x, player.y);
+                life--;
             }
         }
 
@@ -439,42 +406,20 @@ int playMiniBoss() {
             }
         }
 
+        // Draw HUD
         int numBullets = MAX_BULLETS;
         for (int i = 0; i < MAX_BULLETS; i++) {
             if (bullets[i].active) {
                 numBullets--;
             }
         }
-        drawHud(score, life, numBullets);
+        drawHud(score, life, maxLife, numBullets);
 
-        /* changes ni denz
-        if (score >= 10) {
-            system("cls");
-            gotoxy(WIDTH / 2 - 7, HEIGHT / 2 - 1);
-            setColor(10);
-            printf("Here it comes...");
-
-            gotoxy(WIDTH / 2 - 10, HEIGHT / 2);
-            setColor(14);
-            printf("Press 1 to continue to");
-            gotoxy(WIDTH / 2 - 4, HEIGHT / 2 + 1);
-            printf("Round 2");
-            setColor(7);
-
-
-            while(1) {
-                if (_kbhit()) {
-                    char choice = _getch();
-                    if (choice == '1') {
-                        return life;  // Return life to continue to round 2
-                    } else if (choice == 27) {
-                        return 0;  // ESC to exit
-                    }
-                }
-            }
+        // if boss has been killed
+        if (life_Boss <= 0) {
+            GPlayerScore = score;
+            return life;
         }
-        */
-        //changes ni denz
 
         if (life <= 0) {
             gotoxy(WIDTH/2 - 5, HEIGHT/2);

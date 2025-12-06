@@ -13,14 +13,16 @@ void setColor(int);                 // Sets text color
 
 
 // =============== Drawing Functions ===============
-void drawBorder();                  // Draws the play area boundary
+void drawBorder(int, int);                  // Draws the play area boundary
+void drawTitleBorder(int, int, int, int);
+void drawBorderPVP();
 void drawPlayer(int, int);          // Draws the player symbol '^'
 void drawEnemy(int, int);           // Draws an enemy '*'
 void drawHittable(int, int);           // Draws a hittable 'O'
 void drawBullet(int, int);          // Draws a bullet '|'
 void drawBossEntity(int, int, char [BOSS_H][BOSS_W], int, int); // Draws the Boss and the miniboss
 void drawBossBullet(int, int);      // Draws the bullet of boss
-void drawHud(int, int, int);
+void drawHud(int, int, int, int);
 
 
 // =============== Erasing Functions ===============

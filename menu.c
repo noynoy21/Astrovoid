@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "menu.h"
 #include "render.h"
+#include "config.h"
 
 // ===================== MENU FUNCTION =====================
 void showMenu() {
@@ -65,7 +66,253 @@ void tutorialRound1() {
     _getch();
 }
 
-void bossRound() {
+int WINRound1()
+{
+    system("cls");
+    drawTitleBorder(23, 0, 4, HEIGHT / 2 - 2); // Specific parameters for the printed texts
+    gotoxy(WIDTH / 2 - 6, HEIGHT / 2 - 1);
+    setColor(10);
+    printf("CONGRATULATIONS!");
+    gotoxy(WIDTH / 2 - 9, HEIGHT / 2);
+    setColor(14);
+    printf("Press 1 to continue to");
+    gotoxy(WIDTH / 2 - 3, HEIGHT / 2 + 1);
+    printf("Round 2");
+    setColor(7);
+    
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                return 1;  // Return life to continue to round 2
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+int WINRound2()
+{
+    system("cls");
+    drawTitleBorder(23, 0, 4, HEIGHT / 2 - 2); // Specific parameters for the printed texts
+    gotoxy(WIDTH / 2 - 6, HEIGHT / 2 - 1);
+    setColor(10);
+    printf("CONGRATULATIONS!");
+    gotoxy(WIDTH / 2 - 9, HEIGHT / 2);
+    setColor(14);
+    printf("Press 1 to continue to");
+    gotoxy(WIDTH / 2 - 3, HEIGHT / 2 + 1);
+    setColor(4);
+    printf("MiniBoss");
+    setColor(7);
+    
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                return 1;  // player wants to continue to miniboss
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+int miniBossIntro(int width, int height){
+    system("cls");
+    drawTitleBorder(23, 0, 3, HEIGHT / 2 - 1); // Specific parameters for the printed texts
+    gotoxy(WIDTH / 2 - 2, HEIGHT / 2 - 2);
+    setColor(12);
+    printf("+2 lives!");
+    gotoxy(WIDTH / 2 - 2, HEIGHT / 2);
+    setColor(12);
+    printf("Uh oh...\n");
+    gotoxy(WIDTH / 2 - 9, HEIGHT / 2+1);
+    setColor(4); printf("SOMETHING"); setColor(12); printf(" is coming...");
+    setColor(7);
+    gotoxy(WIDTH / 2 - 9, HEIGHT / 2+3);
+    printf("press 1 to continue...");
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                break;
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+int WINMiniBoss()
+{
+    system("cls");
+    drawTitleBorder(27, 0, 2, HEIGHT / 2 - 1); // Specific parameters for the printed texts
+    gotoxy(WIDTH/2-4, HEIGHT/2-2);
+    setColor(10);
+    printf("Miniboss Killed!");
+    gotoxy(WIDTH/2-6, HEIGHT/2);
+    printf("\"ARRGH! YOU GOT ME!\"");
+    Sleep(3000);
+    // New text box
+    system("cls");
+    drawTitleBorder(27, 0, 2, HEIGHT / 2 - 1); // Specific parameters for the printed texts
+    gotoxy(WIDTH/2-2, HEIGHT/2-2);
+    setColor(10);
+    printf("+2 Lives!");
+    gotoxy(WIDTH/2-9, HEIGHT/2);
+    setColor(12);
+    printf("\"BUT THIS IS ");
+    setColor(4);
+    printf("NOT THE END!\"");
+
+    setColor(10);
+    gotoxy(WIDTH/2-7, HEIGHT/2+2);
+    printf("Press 1 to continue to");
+    gotoxy(WIDTH / 2 - 2, HEIGHT / 2 + 3);
+    setColor(4);
+    printf("Final Boss");
+
+    setColor(7);
+
+    _getch();
+    //bossRoundMenu();
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                return 1;  // player wants to continue to final boss
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+int WINBoss()
+{
+    system("cls");
+    drawTitleBorder(27, 0, 2, HEIGHT / 2 - 1); // Specific parameters for the printed texts
+    gotoxy(WIDTH/2-2, HEIGHT/2-2);
+    setColor(10);
+    printf("BOSS Killed!");
+    gotoxy(WIDTH/2-8, HEIGHT/2);
+    printf("\"WHAAT?! YOU BEAT ME?!\"");
+    Sleep(3000);
+
+    // New text box
+    system("cls");
+    drawTitleBorder(27, 0, 2, HEIGHT / 2 - 1); // Specific parameters for the printed texts
+    gotoxy(WIDTH/2-1, HEIGHT/2-2);
+    setColor(10);
+    printf("Congrats!");
+    gotoxy(WIDTH/2-9, HEIGHT/2);
+    setColor(12);
+    printf("\"CURSE YOU,  ");
+    setColor(4);
+    printf("CURSE YOU!!!\"");
+
+    setColor(10);
+    gotoxy(WIDTH/2-7, HEIGHT/2+2);
+    printf("Press 1 to finish game");
+
+    setColor(7);
+
+    _getch();
+    //bossRoundMenu();
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                return 1;  // player wants to finish
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+int creditsRoll()
+{
+    char words[][50] = {
+        "    Made as a Machine Problem",
+        "     project for the CMSC 11",
+        "     class of the developers:",
+        "       Benjamin A. Deypalan",
+        "    Constantino T. Cesista Jr.",
+        "       Dave Javenn G. Suan",
+        "     Denzil John B. Claridad",
+        "",
+        "   A message to our instructor,",
+        "            Sir Allan:",
+        "   Thank you for the wonderful",
+        "   semester! We really learned",
+        "  a lot, and tried to implement",
+        " all of the lessons you gave us.",
+        "    Keep on soaring high, Sir!",
+        "",
+        "      Thank you for playing!",
+        "  'till we meet again, Guardian!",
+        "        Press 1 to finish",
+    };
+
+    int numWords = sizeof(words) / sizeof(words[0]);
+
+    Sentences lines[numWords];
+
+    for (int i = 0; i < numWords; i++) {
+        lines[i].x = 1; lines[i].y = HEIGHT+i-1;
+        lines[i].active = 1;
+        strcpy(lines[i].sentence, words[i]);
+    }
+
+    while (1) {
+        system("cls");
+        drawBorder(WIDTH+15, HEIGHT);
+        int tempNum = numWords-1;
+        for (int i = 0; i < numWords-1; i++) {
+            if (lines[i].y < HEIGHT && lines[i].y > 0) 
+                lines[i].active = 1;
+            else 
+                lines[i].active = 0;
+            if (lines[i].active) {  
+                setColor(9);
+                gotoxy(lines[i].x, lines[i].y);
+                puts(lines[i].sentence);
+            }
+
+            lines[i].y--;
+        }
+
+        if (lines[tempNum].y <= HEIGHT/2) {
+            setColor(1);
+            gotoxy(lines[tempNum].x, lines[tempNum].y);
+            puts(lines[tempNum].sentence);
+            break;
+        } 
+        else if (lines[tempNum].y < HEIGHT) {
+            setColor(1);
+            gotoxy(lines[tempNum].x, lines[tempNum].y);
+            puts(lines[tempNum].sentence);
+        }
+        
+        lines[tempNum].y--;
+        Sleep(1000);
+    }
+    while(1) {
+        if (_kbhit()) {
+            char choice = _getch();
+            if (choice == '1') {
+                return 1;  // player wants to finish
+            } else if (choice == 27) {
+                return 0;  // ESC to exit
+            }
+        }
+    }
+}
+
+void bossRoundMenu() {
     SetConsoleOutputCP(CP_UTF8);
     system("cls");
     setColor(10);

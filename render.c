@@ -1,9 +1,11 @@
 #include <windows.h>
 #include <stdio.h>
 #include "render.h"
-#define WIDTH 20         // The horizontal boundary of the game area
-#define HEIGHT 15        // The vertical boundary of the game area
-#define MAX_BULLETS 3    // Maximum number of bullets that can be fired simultaneously
+#include "config.h"
+
+//#define WIDTH 20         // The horizontal boundary of the game area
+//#define HEIGHT 15        // The vertical boundary of the game area
+//#define MAX_BULLETS 3    // Maximum number of bullets that can be fired simultaneously
 
 
 // =============== Console Control Functions ===============
@@ -29,15 +31,42 @@ void setColor(int color) {
 
 // =============== Drawing Functions ===============
 // Draws rectangular boundary for the play area using '#'
-void drawBorder() {
+void drawBorder(int width, int height) {
     setColor(8);                                           // Gray color
-    for (int i = 0; i <= WIDTH; i++) {
+    for (int i = 0; i <= width; i++) {
         gotoxy(i, 0); printf("#");                         // Top border
-        gotoxy(i, HEIGHT); printf("#");                    // Bottom border
+        gotoxy(i, height); printf("#");                    // Bottom border
     }
-    for (int i = 0; i <= HEIGHT; i++) {
+    for (int i = 0; i <= height; i++) {
         gotoxy(0, i); printf("#");                         // Left border
-        gotoxy(WIDTH, i); printf("#");                     // Right border
+        gotoxy(width, i); printf("#");                     // Right border
+    }
+    setColor(7);                                           // Reset to white
+}
+
+void drawTitleBorder(int width, int x, int height, int y) {
+    setColor(8);                                           // Gray color
+    for (int i = 0; i <= width; i++) {
+        gotoxy(i+x, 0+y); printf("#");                         // Top border
+        gotoxy(i+x, height+y); printf("#");                    // Bottom border
+    }
+    for (int i = 0; i <= height; i++) {
+        gotoxy(0+x, i+y); printf("#");                         // Left border
+        gotoxy(width+x, i+y); printf("#");                     // Right border
+    }
+    setColor(7);                                           // Reset to white
+}
+
+// Draws rectangular boundary for the play area using '#' (FOR PVP)
+void drawBorderPVP() {
+    setColor(8);                                           // Gray color
+    for (int i = 0; i <= PVP_WIDTH; i++) {
+        gotoxy(i, 0); printf("#");                         // Top border
+        gotoxy(i, PVP_HEIGHT); printf("#");                    // Bottom border
+    }
+    for (int i = 0; i <= PVP_HEIGHT; i++) {
+        gotoxy(0, i); printf("#");                         // Left border
+        gotoxy(PVP_WIDTH, i); printf("#");                     // Right border
     }
     setColor(7);                                           // Reset to white
 }
@@ -102,7 +131,7 @@ void drawBossBullet(int x, int y) {   // Use actual coordinates
 }
 
 // Draw Headsup display (HUD)
-void drawHud(int score, int life, int numBullets) {
+void drawHud(int score, int life, int maxLife, int numBullets) {
         // -------- Display the score beside play area --------
         gotoxy(WIDTH + 5, 2);
         setColor(10);
@@ -125,10 +154,10 @@ void drawHud(int score, int life, int numBullets) {
         setColor(10);
         printf("Life: ");
         setColor(12);
-        for(int i = 0; i< life; i++){
+        for(int i = 0; i < life; i++){
             printf("o");
         }
-        for (int i = life; i < 5; i++) printf(" "); // erase leftover markers when life decreases
+        for (int i = life; i < maxLife; i++) printf(" "); // erase leftover markers when life decreases
         setColor(7);
 }
 
@@ -184,10 +213,10 @@ void explosionEffect(int x, int y) {
     for (int i = 0; i < 3; i++) {          // Repeat 3 flashes
         setColor(12);
         gotoxy(x, y); printf("X");         // Red 'X'
-        Sleep(5);
+        Sleep(1);
         setColor(14);
         gotoxy(x, y); printf("X");         // Yellow flash
-        Sleep(5);
+        Sleep(1);
         gotoxy(x, y); printf(" ");         // Clear
     }
     setColor(7);                           // Reset color
@@ -196,10 +225,10 @@ void explosionEffect(int x, int y) {
 void explosionBossEffect(int x, int y) {
     setColor(12);
     gotoxy(x, y); printf("X");         // Red 'X'
-    Sleep(4);
+    Sleep(1);
     setColor(14);
     gotoxy(x, y); printf("X");         // Yellow flash
-    Sleep(4);
+    Sleep(1);
     gotoxy(x, y); printf(" ");         // Clear
     setColor(7);                       // Reset color
 }
