@@ -1,22 +1,15 @@
 #include "gameRound1.h"
 #include "gameRound2.h"
+#include "gameFinalBoss.h"
 #include "mainGame.h"
+#include "config.h"
+#include "menu.h"
 
 int playGame()
 {
     // Play Round 1 
     int playerLife = playRound1();
 
-<<<<<<< Updated upstream
-    // If player survived Round 1, proceed to Round 2 
-    if (playerLife > 0) {
-        playerLife = playRound2();  
-        
-        // If player survived Round 2, proceed to Final Boss 
-        if (playerLife > 0) {
-            playBOSS();  
-        }
-=======
     // terminate gameplay sequence if the player lost the first round or the player does not want to continue (or both)
     if (!playerLife || !WINRound1()) {
         return 0;
@@ -29,7 +22,7 @@ int playGame()
         return 0;
     }
 
-    miniBossIntro(WIDTH, HEIGHT);                        // Intro cutscene for the miniboss
+    miniBossIntro();                        // Intro cutscene for the miniboss
     playerLife = playMiniBoss(playerLife);  // Executes the miniboss round
 
     
@@ -41,8 +34,19 @@ int playGame()
     if (playBOSS(playerLife)) {
         WINBoss();
         creditsRoll();
->>>>>>> Stashed changes
     }
     
     return 0;
 }
+
+/*
+int executeRound1()
+{
+    return playRound1;
+}
+
+int executeRound2(int life)
+{
+    int playerLife = playRound2(life);
+    if 
+}*/
