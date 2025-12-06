@@ -11,12 +11,12 @@
 #include "config.h"
 
 /* 
-   CMSC 11 Machine Problem
-	   Our_Awesome_Game_Name++;
-	   Group Members:
-	   - Stark, Arya T.
-       - Monkey, Luffy D.
-	   - Parker, Peter P.
+    CMSC 11 Machine Problem
+    Astrovoid
+    Group Members:
+    - Stark, Arya T.
+    - Monkey, Luffy D.
+    - Parker, Peter P.
 */
 
 // Compile command:
@@ -53,7 +53,6 @@ int main() {
                 return 0;
             // Testing Cases (developer easter eggs)
             case 67:
-                miniBossIntro(1, (HEIGHT / 2) + 1);
                 playRound2(7);
                 break;
             case 69:

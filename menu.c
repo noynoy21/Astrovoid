@@ -119,7 +119,7 @@ int WINRound2()
     }
 }
 
-int miniBossIntro(int width, int height){
+int miniBossIntro(){
     system("cls");
     drawTitleBorder(23, 0, 3, HEIGHT / 2 - 1); // Specific parameters for the printed texts
     gotoxy(WIDTH / 2 - 2, HEIGHT / 2 - 2);
