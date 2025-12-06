@@ -8,11 +8,14 @@
 #include "pvp.h"
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 #define PVP_WIDTH 20
 #define PVP_HEIGHT 15
 #define PVP_MAX_BULLETS_PER_PLAYER 3  // Each player gets 3 bullets
 #define PVP_MAX_LIVES 3
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 // ===================== PVP GAMEPLAY (LANDSCAPE) =====================
