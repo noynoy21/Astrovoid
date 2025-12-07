@@ -106,10 +106,10 @@ void playPVP() {
 
         // Boundary checking - players can only move UP/DOWN
         if (player1.y < 1) player1.y = 1;
-        if (player1.y > PVP_HEIGHT - 2) player1.y = PVP_HEIGHT - 2;
+        if (player1.y > PVP_HEIGHT - 1) player1.y = PVP_HEIGHT - 1;
         
         if (player2.y < 1) player2.y = 1;
-        if (player2.y > PVP_HEIGHT - 2) player2.y = PVP_HEIGHT - 2;
+        if (player2.y > PVP_HEIGHT - 1) player2.y = PVP_HEIGHT - 1;
 
         // Move bullets HORIZONTALLY
         for (int i = 0; i < PVP_MAX_BULLETS_PER_PLAYER * 2; i++) {
