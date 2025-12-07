@@ -320,13 +320,13 @@ void tutorialPVP() {
     printf("============== PVP TUTORIAL ==============\n");
     setColor(7);
     printf("PLAYER 1 (Blue ");
-    setColor(9); printf("\u25B2"); setColor(7);
+    setColor(9); printf("\u25BA"); setColor(7);
     printf("):\n");
     printf("  Move: W/S\n");
     printf("  Shoot: SPACEBAR\n\n");
 
     printf("PLAYER 2 (Green ");
-    setColor(10); printf("\u25BC"); setColor(7);
+    setColor(10); printf("\u25C4"); setColor(7);
     printf("):\n");
     printf("  Move: UP ARROW/DOWN ARROW\n");
     printf("  Shoot: ENTER\n\n");
