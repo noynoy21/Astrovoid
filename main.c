@@ -14,9 +14,10 @@
     CMSC 11 Machine Problem
     Astrovoid
     Group Members:
-    - Stark, Arya T.
-    - Monkey, Luffy D.
-    - Parker, Peter P.
+    - Cesista, Constantino T. Jr.
+    - Claridad, Denzil John B.
+    - Deypalan, Benjamin A.
+    - Suan, Dave Javenn G.
 */
 
 // Compile command:
